@@ -7,9 +7,9 @@ export interface Categoria {
 }
 
 export const tema = {
-  nombre: "mercado",
-  inicial: "M",
-  emoji: "🛒",
+  nombre: "verdulería",
+  inicial: "V",
+  emoji: "🥬",
   login: {
     kicker: "Tu tienda, más simple",
     titulo: "Compra lo que te hace bien.",
@@ -17,8 +17,12 @@ export const tema = {
       "Encuentra productos seleccionados para tu día a día y disfruta una experiencia de compra sencilla.",
   },
   // categorias de su tienda, con el prefijo del grupo. ejemplo:
-  // { valor: "Ropa-Polos", etiqueta: "Polos" },
-  categorias: [] as Categoria[],
+  categorias: [
+    { valor: "Verdu-Verduras", etiqueta: "Verduras" },
+    { valor: "Verdu-Frutas", etiqueta: "Frutas" },
+    { valor: "Verdu-Tuberculos", etiqueta: "Tubérculos" },
+    { valor: "Verdu-Hierbas", etiqueta: "Hierbas" },
+  ] as Categoria[],
 };
 
 export function etiquetaCategoria(valor: string) {
