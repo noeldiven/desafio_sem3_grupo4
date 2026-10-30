@@ -43,12 +43,13 @@ export function AlertaBanner({
   const { bg, text, icon } = CONFIG[tipo];
 
   return (
-    <div className={`mt-4 flex gap-3 rounded-lg border p-4 ${bg}`} role="alert">
-      <span className={`text-lg ${text}`}>{icon}</span>
-      <div className="flex-1">
-        {titulo && <p className={`font-semibold ${text}`}>{titulo}</p>}
-        <p className={`text-sm ${text}`}>{mensaje}</p>
-      </div>
+    <div
+      className={`mt-4 flex items-start gap-3 rounded-lg border p-4 ${bg}`}
+      role="alert"
+    >
+      <span className={`text-lg leading-none ${text}`} aria-hidden="true">
+        {icon}
+      </span>
       <div className="flex-1">
         {titulo && <p className={`font-semibold ${text}`}>{titulo}</p>}
         <p className={`text-sm ${text}`}>{mensaje}</p>
@@ -67,7 +68,7 @@ export function AlertaBanner({
           type="button"
           aria-label="Cerrar alerta"
           onClick={onCerrar}
-          className={`border-0 bg-transparent text-sm ${text} hover:opacity-70`}
+          className={`shrink-0 border-0 bg-transparent text-lg leading-none ${text} hover:opacity-70`}
         >
           ×
         </button>
