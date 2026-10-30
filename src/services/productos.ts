@@ -43,13 +43,18 @@ export const productosService = {
     porPagina: number,
     categoria: string,
   ): Promise<PaginaProductos> => {
-    console.warn("TODO [C]: getPagina", pagina, porPagina);
-    const respuesta = await api.get<ProductoApi[]>("/products/", {
-      params: categoria !== "Todas" ? { category: categoria } : {},
-    });
+    const params: Record<string, string | number> = {
+      skip: (pagina - 1) * porPagina,
+      limit: porPagina + 1,
+    };
+    if (categoria !== "Todas") params.category = categoria;
+
+    const respuesta = await api.get<ProductoApi[]>("/products/", { params });
+    const hayMas = respuesta.data.length > porPagina;
+
     return {
-      productos: respuesta.data.map(convertirProducto),
-      hayMas: false,
+      productos: respuesta.data.slice(0, porPagina).map(convertirProducto),
+      hayMas,
     };
   },
 
