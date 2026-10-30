@@ -16,6 +16,24 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+    const url: string = error.config?.url ?? "";
+
+    const login = url.includes("/login") || url.includes("/auth/login");
+
+    if (status === 401 && !login) {
+      useAuthStore.getState().logout();
+      if (window.location.pathname !== "/login") {
+        window.location.replace("/login?sesion=expirada");
+      }
+    }
+    return Promise.reject(error)
+  },
+);
+
 // TODO [A]: interceptor de respuesta
 // - si la API responde 401 el token ya no sirve: hacer logout()
 //   y mandar al usuario a /login?sesion=expirada (aqui no hay useNavigate)

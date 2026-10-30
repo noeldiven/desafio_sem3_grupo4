@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { loginSchema, type LoginFormData } from "../schemas/loginSchema";
 import { authService } from "../services/auth";
 import { useAuthStore } from "../store/useAuthStore";
@@ -22,6 +22,8 @@ export function LoginPage() {
   const navigate = useNavigate();
   const loginStore = useAuthStore((s) => s.login);
   const [errorServidor, setErrorServidor] = useState("");
+  const [SearchParams] = useSearchParams();
+  const expirado = SearchParams.get("sesion") === "expirada";
   const {
     register,
     handleSubmit,
@@ -55,7 +57,9 @@ export function LoginPage() {
           <div className="hidden flex-col justify-between bg-marca-700 p-10 text-white lg:flex xl:p-14">
             <div className="flex items-center gap-3">
               <StoreMark />
-              <span className="text-xl font-bold tracking-tight">{tema.nombre}</span>
+              <span className="text-xl font-bold tracking-tight">
+                {tema.nombre}
+              </span>
             </div>
             <div className="max-w-md">
               <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-marca-200">
@@ -68,7 +72,9 @@ export function LoginPage() {
                 {tema.login.texto}
               </p>
             </div>
-            <p className="text-sm text-marca-200">© {ANIO} {tema.nombre}</p>
+            <p className="text-sm text-marca-200">
+              © {ANIO} {tema.nombre}
+            </p>
           </div>
 
           <div className="flex items-center justify-center p-7 sm:p-12 lg:p-14">
@@ -90,7 +96,7 @@ export function LoginPage() {
                   Accede a tu cuenta para ver tus pedidos y favoritos.
                 </p>
               </div>
-
+              {expirado && <div>tu sesion expiro </div>}
               {errorServidor && (
                 <div className="mb-4 rounded-xl bg-rose-50 p-3 text-sm text-rose-600 border border-rose-200">
                   {errorServidor}
